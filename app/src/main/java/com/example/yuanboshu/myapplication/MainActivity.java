@@ -12,5 +12,6 @@ public class MainActivity extends AppCompatActivity {
         String a = "this is a test commit";
         String b = "this is a test commit2";
         String d = "this is a syb2 info";
+        String c = "this is a master info";
     }
 }
