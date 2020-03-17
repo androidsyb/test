@@ -1,0 +1,69 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// 解压缩第三方jar包到某目录
+task unzip(type: Copy) {
+    // 原始jar包文件
+    def zipFile = file('app/libs/fssdkpack.jar')
+    // 解压缩目标目录
+    def outputDir = file("app/newLibs")
+    // 文件过滤，去除部分class。这里建议写精确点，因为可能存在名称相同或相近的文件。
+     FileTree jarTree = zipTree(zipFile)
+    // 从jar的目录树中输出到目标目录
+    from jarTree
+    into outputDir
+//    moveFile()
+}
+//解压so文件
+task unzipso(type: Copy) {
+    // 原始jar包文件
+    def zipFile = file('app/newLibs/solib.jar')
+    // 解压缩目标目录
+    def outputDir = file("app/jniLib")
+    // 文件过滤，去除部分class。可以过滤额外东西
+    FileTree jarTree = zipTree(zipFile)
+    // 从jar的目录树中输出到目标目录
+    from jarTree
+    into outputDir
+}
+task moveFile(type: Copy) {
+    from 'app/newLibs/facesdk.jar'
+    from 'app/newLibs/opencvsdk.jar'
+    into 'app/libs/'
+}
+
+task deleteDir(type: Delete) {
+    delete 'app/libs/fssdkpack.jar'
+    delete 'app/newLibs'
+    delete 'app/jniLib/META-INF'
+}
+
+//unzip->moveFile->unzipso->deleteDir->deleteOldSdk
+moveFile.dependsOn unzip
+unzipso.dependsOn moveFile
+deleteDir.dependsOn unzipso
