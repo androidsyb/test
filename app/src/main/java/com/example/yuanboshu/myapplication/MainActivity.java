@@ -10,5 +10,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String version1 = "begin";
+        String e = "this is a syb2 1.9.16";
     }
 }
