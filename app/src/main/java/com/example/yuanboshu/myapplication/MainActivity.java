@@ -9,9 +9,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String a = "this is a test commit";
-        String b = "this is a test commit2";
-        String d = "this is a syb2 info";
-        String c = "this is a master info";
+        String version1 = "begin";
     }
 }
